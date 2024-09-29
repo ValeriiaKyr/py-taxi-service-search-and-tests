@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
 
-from .forms import (
+from taxi.forms import (
     DriverCreationForm,
     DriverLicenseUpdateForm,
     CarForm,
@@ -13,7 +13,7 @@ from .forms import (
     CarsSearchForm,
     ManufacturerSearchForm
 )
-from .models import Driver, Car, Manufacturer
+from taxi.models import Driver, Car, Manufacturer
 
 
 @login_required
@@ -46,7 +46,7 @@ class ManufacturerListView(LoginRequiredMixin, generic.ListView):
     def get_context_data(self, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         name = self.request.GET.get("name", "")
-        context["manufacturer_search_form"] = ManufacturerSearchForm(
+        context["search_form"] = ManufacturerSearchForm(
             initial={"name": name}
         )
         return context
@@ -83,7 +83,7 @@ class CarListView(LoginRequiredMixin, generic.ListView):
     def get_context_data(self, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         model = self.request.GET.get("model", "")
-        context["car_search_form"] = CarsSearchForm(
+        context["search_form"] = CarsSearchForm(
             initial={"model": model}
         )
         return context
@@ -125,7 +125,7 @@ class DriverListView(LoginRequiredMixin, generic.ListView):
     def get_context_data(self, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         username = self.request.GET.get("username", "")
-        context["driver_search_form"] = DriversSearchForm(
+        context["search_form"] = DriversSearchForm(
             initial={"username": username}
         )
         return context
